@@ -29,10 +29,32 @@
         };
     };
 
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <130>;
+            flavor = "tap-preferred";
+        };
+
+        OSM_shift: OSM_shift {
+            compatible = "zmk,behavior-sticky-key";
+            label = "OSM_SHIFT";
+            bindings = <&kp>;
+            #binding-cells = <1>;
+            release-after-ms = <200>;
+            quick-release;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
+        Main {
             // -----------------------------------------------------------------
             // |ESC | 1  | 2  | 3  | 4  | 5  |   | 6  | 7  | 8  | 9  | 0  |DEL |
             // |TAB | Q  | W  | E  | R  | T  |   | Y  | U  | I  | O  | P  |HOME|
@@ -42,16 +64,16 @@
             //                |LANG|SPC |MO1 |   |BSPC|RET |MO1 | B  |
 
             bindings = <
-&kp ESC    &kp N1     &kp N2                &kp N3  &kp N4  &kp N5  &kp N6          &kp N7   &kp N8     &kp N9    &kp N0     &kp NON_US_BACKSLASH
-&kp TAB    &kp Q      &kp W                 &kp E   &kp R   &kp T   &kp Y           &kp U    &kp I      &kp O     &kp P      &kp HOME
-&kp CAPS   &kp A      &kp S                 &kp D   &kp F   &kp G   &kp H           &kp J    &kp K      &kp L     &kp SEMI   &kp PG_UP
-&kp LSHFT  &kp Z      &kp X                 &kp C   &kp V   &kp B   &kp N           &kp M    &kp COMMA  &kp DOT   &kp FSLH   &kp PG_DN
-&kp LCTRL  &kp LALT   &kp LGUI              &none   &none   &none   &none           &none    &none      &kp RALT  &kp RCTRL  &kp END
-&mo 1      &kp SPACE  &kp NON_US_BACKSLASH                          &kp LANGUAGE_1  &kp RET  &mo 1      &kp B
+&kp ESC           &kp N1     &kp N2       &kp N3  &kp N4  &kp N5  &kp N6                  &kp N7     &kp N8                     &kp N9    &kp N0     &kp NON_US_BACKSLASH
+&kp TAB           &kp Q      &kp W        &kp E   &kp R   &kp T   &kp Y                   &kp U      &kp I                      &kp O     &kp P      &hm HOME DELETE
+&kp CAPS          &kp A      &kp S        &kp D   &kp F   &kp G   &kp H                   &kp J      &kp K                      &kp L     &kp SEMI   &hm PG_UP PRINTSCREEN
+&OSM_shift LSHFT  &kp Z      &kp X        &kp C   &kp V   &kp B   &kp N                   &kp M      &kp COMMA                  &kp DOT   &kp FSLH   &hm PG_DN RIGHT_SHIFT
+&kp LCTRL         &kp LALT   &kp LGUI     &none   &none   &none   &none                   &none      &none                      &kp RALT  &kp RCTRL  &kp END
+&mo 1             &kp SPACE  &lt 1 ENTER                          &lt 1 NON_US_BACKSLASH  &kp SPACE  &hm LANGUAGE_2 LANGUAGE_1  &kp B
             >;
         };
 
-        lower_layer {
+        Numpad {
             bindings = <
 &kp F1      &kp F2        &kp F3         &kp F4        &kp F5    &kp F6     &kp F7          &kp F8     &kp F9     &kp F10    &kp F11          &kp F12
 &trans      &kp HOME      &kp UP         &kp END       &kp HOME  &kp PG_UP  &mkp MCLK       &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp KP_PLUS      &kp BSPC
